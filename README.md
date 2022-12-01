@@ -7,3 +7,14 @@
 [![codecov](https://codecov.io/gh/ianhi/raman-analysis/branch/main/graph/badge.svg)](https://codecov.io/gh/ianhi/raman-analysis)
 
 Analysis of raman spectra
+
+### Installation:
+
+Use the `micro-analysis` environment from ianhi.github.io/envs:
+
+```
+mamba env create --force --file https://ianhi.github.io/envs/envs/micro-analysis-no-vim.yaml
+conda activate micro-analysis
+pre-commit install
+pip install -e .
+```
