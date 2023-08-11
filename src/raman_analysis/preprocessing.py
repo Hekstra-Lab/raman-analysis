@@ -1,14 +1,22 @@
 from __future__ import annotations
 
+from typing import Any
+
 import numpy as np
 import pandas as pd
+from pybaselines import Baseline
 from scipy.signal import find_peaks
 
-__all__ = ["find_cosmic_rays", "remove_cosmic_rays", "group_spectra_points"]
+__all__ = [
+    "find_cosmic_rays",
+    "remove_cosmic_rays",
+    "group_spectra_points",
+    "baseline",
+]
 
 
 def find_cosmic_rays(
-    spectra: np.ndarray, ignore_region: tuple[int, int] = (200, 400), **kwargs
+    spectra: np.ndarray, ignore_region: tuple[int, int] = (200, 400), **kwargs: Any
 ) -> np.ndarray:
     """
     Find the indices of cosmic rays.
@@ -45,7 +53,9 @@ def find_cosmic_rays(
     return np.asarray(idx)
 
 
-def remove_cosmic_rays(df: pd.DataFrame, plot: bool = False, **kwargs) -> pd.DataFrame:
+def remove_cosmic_rays(
+    df: pd.DataFrame, plot: bool = False, **kwargs: Any
+) -> pd.DataFrame:
     """
     Process a dataframe by removing all spectra with detected cosmic rays.
 
@@ -91,7 +101,7 @@ def remove_cosmic_rays(df: pd.DataFrame, plot: bool = False, **kwargs) -> pd.Dat
     return df.iloc[keep_idx]
 
 
-def group_spectra_points(df, multiplier: int) -> pd.DataFrame:
+def group_spectra_points(df: pd.DataFrame, multiplier: int) -> pd.DataFrame:
     """
     Add which point each spectra is from to the multiindex.
 
@@ -121,3 +131,35 @@ def group_spectra_points(df, multiplier: int) -> pd.DataFrame:
         offset = df.loc[pos, "pt"].max()
     df["pt"] = df["pt"].astype(int)
     return df.set_index("pt", append=True)
+
+
+def baseline(spectra: np.ndarray, method: str = "arpls", **params: Any) -> np.ndarray:
+    """
+    Calculate the baseline of [many] spectra using pybaselines.
+
+    Parameters
+    ----------
+    spectra : array-like ([N], wns)
+        The spectra to calculate the baseline of.
+    method : str, default: "arpls"
+        The pybaselines method name.
+    **params:
+        Passed to pybaselines
+
+    Returns
+    -------
+    baseline : np.ndarray ([N], wns)
+        The calculated baselines
+    """
+    baseliner = Baseline(np.arange(1340))
+    baseline_func = getattr(baseliner, method)
+
+    spectra = np.atleast_2d(spectra)
+    if np.issubdtype(spectra.dtype, np.integer):
+        spectra = spectra.astype(np.float32)
+
+    baselines = np.zeros_like(spectra)
+
+    for i, spec in enumerate(spectra):
+        baselines[i], w = baseline_func(spec, **params)
+    return baselines.squeeze()

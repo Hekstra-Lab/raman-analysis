@@ -25,6 +25,8 @@ classifiers = [
 dynamic = ["version"]
 dependencies = [
     "scipy",
+    "pybaselines",
+    "pentapy",
 ]
 
 # extras
