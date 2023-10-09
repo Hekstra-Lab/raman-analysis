@@ -5,7 +5,9 @@ import pandas as pd
 import xarray as xr
 
 
-def ds2df(ds: xr.Dataset, fov: int, cell_index_start: int = 0, filename=None) -> pd.DataFrame:
+def ds2df(
+    ds: xr.Dataset, fov: int, cell_index_start: int = 0, filename=None
+) -> pd.DataFrame:
     """
     Convert a single dataset into a dataframe.
 
@@ -53,8 +55,6 @@ def ds2df(ds: xr.Dataset, fov: int, cell_index_start: int = 0, filename=None) ->
     return df
 
 
-
-
 def glob2df(
     files: Union[Iterable[str], str],
     conditions,
@@ -64,6 +64,106 @@ def glob2df(
     verbose: bool = True,
 ) -> pd.DataFrame:
     """
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     Parameters
     ----------
     files : iterable, str
