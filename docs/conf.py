@@ -225,4 +225,4 @@ def linkcode_resolve(domain, info):
 
     fn = os.path.relpath(fn, start=os.path.dirname("../raman_analysis"))
 
-    return f"https://github.com/ianhi/raman-analysis/blob/main/raman_analysis/{fn}{linespec}"  # noqa
+    return f"https://github.com/ianhi/raman-analysis/blob/main/raman_analysis/{fn}{linespec}"

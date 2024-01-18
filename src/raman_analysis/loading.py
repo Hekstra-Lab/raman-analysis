@@ -1,4 +1,6 @@
-from typing import Iterable, Union
+from __future__ import annotations
+
+from typing import Iterable
 
 import numpy as np
 import pandas as pd
@@ -6,7 +8,7 @@ import xarray as xr
 
 
 def ds2df(
-    ds: xr.Dataset, fov: int, cell_index_start: int = 0, filename=None
+    ds: xr.Dataset, fov: int, cell_index_start: int = 0, filename: str | None = None
 ) -> pd.DataFrame:
     """
     Convert a single dataset into a dataframe.
@@ -39,11 +41,11 @@ def ds2df(
     df["y"] = ds["cell_points"][:, 1]
 
     cell_points = ds["cell_points"] * 2048
-    bkd_points = ds["bkd_points"] * 2048
-    cell_raman = ds["cell_raman"] - 608
-    bkd_raman = ds["bkd_raman"] - 608
+    # bkd_points = ds["bkd_points"] * 2048
+    # cell_raman = ds["cell_raman"] - 608
+    # bkd_raman = ds["bkd_raman"] - 608
 
-    thres = 140
+    # thres = 140
 
     cell_com = cell_points.to_numpy().astype(int)
     gfp_int = np.asarray([ds["img"][1, 0, x[0], x[1]].values for x in cell_com])
@@ -56,113 +58,15 @@ def ds2df(
 
 
 def glob2df(
-    files: Union[Iterable[str], str],
-    conditions,
+    files: Iterable[str] | str,
+    conditions: tuple[str, str],
     threshold: float,
     well_number: int = 0,
     cell_index_start: int = 0,
     verbose: bool = True,
 ) -> pd.DataFrame:
     """
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    Convert a list of raman file names to a dataframe.
 
     Parameters
     ----------
@@ -188,6 +92,8 @@ def glob2df(
     images : xr.DataArray
     """
     if isinstance(files, str):
+        from glob import glob
+
         files = glob(files)
     dfs = []
     images = []
