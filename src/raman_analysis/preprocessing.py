@@ -151,7 +151,7 @@ def baseline(spectra: np.ndarray, method: str = "arpls", **params: Any) -> np.nd
     baseline : np.ndarray ([N], wns)
         The calculated baselines
     """
-    baseliner = Baseline(np.arange(1340))
+    baseliner = Baseline(np.arange(spectra.shape[-1]))
     baseline_func = getattr(baseliner, method)
 
     spectra = np.atleast_2d(spectra)
