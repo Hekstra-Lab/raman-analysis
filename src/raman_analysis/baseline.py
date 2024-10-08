@@ -7,6 +7,7 @@ __all__ = [
     "baseline",
 ]
 
+
 def baseline(spectra: np.ndarray, method: str = "arpls", **params: Any) -> np.ndarray:
     """
     Calculate the baseline of [many] spectra using pybaselines.
