@@ -8,10 +8,10 @@ from pybaselines import Baseline
 from scipy.signal import find_peaks
 
 __all__ = [
-    "find_cosmic_rays",
-    "remove_cosmic_rays",
-    "group_spectra_points",
     "baseline",
+    "find_cosmic_rays",
+    "group_spectra_points",
+    "remove_cosmic_rays",
 ]
 
 
