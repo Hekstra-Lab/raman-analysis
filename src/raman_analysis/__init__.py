@@ -1,4 +1,5 @@
 """Analysis of raman spectra from MIT scope."""
+
 from importlib.metadata import PackageNotFoundError, version
 
 try:
